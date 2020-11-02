@@ -26,6 +26,8 @@ class ExperiencesRequest extends FormRequest
         return [
           'position_en' => 'required|string|max:255',
           'position_ar' => 'required|string|max:255',
+          'description_en' => 'string|max:255',
+          'position_ar' => 'string|max:255',
 
         ];
     }
