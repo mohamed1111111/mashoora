@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ExperiencesRequest extends FormRequest
+class WorkingHoursRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,9 @@ class ExperiencesRequest extends FormRequest
     public function rules()
     {
         return [
-          'position_en' => 'required|string|max:255',
-          'position_ar' => 'required|string|max:255',
-          'description_en' => 'string|max:255',
-          'description_ar' => 'string|max:255',
-
+          'day' => 'required|string|max:25',
+          'from' => 'required|string|max:25',
+          'to' => 'required|string|max:25',
         ];
     }
 }

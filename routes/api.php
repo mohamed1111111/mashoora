@@ -14,11 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//vendor  experiancesroutes
+//vendor  experiances routes
 Route::post('vendors/{vendor}/experiances', 'ExperiencesController@store');
 Route::get('vendors/{vendor}/experiances', 'ExperiencesController@show');
-Route::PATCH('vendors/{vendor}/experiance/{experiance}', 'ExperiencesController@update');
-Route::DELETE('vendors/{vendor}/experiance/{experiance}', 'ExperiencesController@destroy');
+Route::PATCH('vendors/{vendor}/experiances/{experiance}', 'ExperiencesController@update');
+Route::DELETE('vendors/{vendor}/experiances/{experiance}', 'ExperiencesController@destroy');
+//vendor working hours routes
+Route::post('vendors/{vendor}/working/hours', 'WorkingHoursController@store');
+Route::get('vendors/{vendor}/working/hours', 'WorkingHoursController@show');
+Route::PATCH('vendors/{vendor}/working/hours/{hours}', 'WorkingHoursController@update');
+Route::DELETE('vendors/{vendor}/working/hours/{hours}', 'WorkingHoursController@destroy');
 //country  routes
 Route::Post('countries','CountryController@store');
 Route::PATCH('countries/{country}/update','CountryController@update');

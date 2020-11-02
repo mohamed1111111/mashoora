@@ -37,25 +37,28 @@ class ExperiencesController extends Controller
   {
       //
   }
-  public function update(ExperiencesRequest $request, $id)
+  public function update(Request $request, $vendor,$experiance)
   {
 
-    $vendor = Vendor::find($id);
+    $vendor = Vendor::find($vendor);
     if(!$vendor){
       return response()->json(['status' => 'Not found'],404);
                 }
-    $vendor->work_experiences()->update($request->all());
+      $experiance->work_experiences()->find($experiance);
+      if(!$experiance){
+        return response()->json(['status' => 'Not found'],404);
+                  }
+    $vendor->work_experiences()->where('id',$experiance)->update($request->all());
     return response()->json(['status' => 'Success'],200);
 
-
   }
-  public function destroy($id)
+  public function destroy($vendor,$experiance)
   {
-    $vendor = Vendor::find($id);
+    $vendor = Vendor::find($vendor);
     if(!$vendor){
       return response()->json(['status' => 'Not found'],404);
                 }
-    $vendor->work_experiences()->delete();
+    $vendor->work_experiences()->where('id',$experiance)->delete();
 
     return response()->json(['status' => 'Success'],200);
 

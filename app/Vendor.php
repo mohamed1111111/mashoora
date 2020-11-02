@@ -22,4 +22,8 @@ class Vendor extends Model
    {
        return $this->hasMany('App\WorkExperiences');
    }
+   public function working_hours()
+  {
+      return $this->hasMany('App\WorkingHours');
+  }
 }
