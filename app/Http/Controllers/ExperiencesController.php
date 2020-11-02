@@ -26,12 +26,12 @@ class ExperiencesController extends Controller
   {
     $vendor = Vendor::find($id);
     if(!$vendor){
-      return response()->json(['status' => 'Vendor not found'],404);
+      return response()->json(['status' => 'Not found'],404);
                 }
 
       $vendorExperiance=$vendor->work_experiences()->create($request->all());
       return response()->json(['status' => 'Success', 'data' => $vendorExperiance]);
-    
+
   }
   public function edit($id)
   {
@@ -41,6 +41,9 @@ class ExperiencesController extends Controller
   {
 
     $vendor = Vendor::find($id);
+    if(!$vendor){
+      return response()->json(['status' => 'Not found'],404);
+                }
     $vendor->work_experiences()->update($request->all());
     return response()->json(['status' => 'Success'],200);
 
@@ -49,9 +52,12 @@ class ExperiencesController extends Controller
   public function destroy($id)
   {
     $vendor = Vendor::find($id);
+    if(!$vendor){
+      return response()->json(['status' => 'Not found'],404);
+                }
     $vendor->work_experiences()->delete();
 
-    return response()->json(['status' => 'Success']);
+    return response()->json(['status' => 'Success'],200);
 
 
   }
