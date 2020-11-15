@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWorkingHoursTable extends Migration
+class CreateRatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateWorkingHoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('working_hours', function (Blueprint $table) {
+        Schema::create('rates', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('customer_id');
             $table->unsignedInteger('vendor_id');
-            $table->date('day');
-            $table->time('from');
-            $table->time('to');
-            $table->boolean('state')->default(0);
-
+            $table->enum('stars',['1', '2', '3', '4', '5']);
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateWorkingHoursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('working_hours');
+        Schema::dropIfExists('rates');
     }
 }

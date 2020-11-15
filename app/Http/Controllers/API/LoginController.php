@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use App\User;
 class LoginController extends Controller
 {
     /*
@@ -54,8 +55,21 @@ class LoginController extends Controller
 
       if (Auth::attempt($credentials)){
         $token = auth()->user()->createToken('TutsForWeb')->accessToken;
-        return response()->json(['token' => $token], 200);
+        if(auth()->user()->type == 1){
+          $user_id = auth()->user()->id;
+          $user = User::where('id',$user_id)->with('admin')->get();
+        }
+        if(auth()->user()->type == 2){
+          $user_id = auth()->user()->id;
+          $user = User::where('id',$user_id)->with('customer')->get();
+        }
+        if(auth()->user()->type == 3){
+          $user_id = auth()->user()->id;
+          $user = User::where('id',$user_id)->with('vendor')->get();
+        }
+        return response()->json(['status'=>'success','token' => $token,'user'=>$user], 200);
       }
+      return response()->json(['status'=>'Credentials does not match'], 404);
 
 }
 }

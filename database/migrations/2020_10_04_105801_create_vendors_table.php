@@ -31,7 +31,7 @@ class CreateVendorsTable extends Migration
             $table->boolean('state')->default(0);;
             $table->integer('total_booking')->nullable();
             $table->integer('total_reviews')->nullable();
-            $table->integer('rating')->nullable();
+            $table->double('rating')->nullable();
             $table->integer('total_wallet')->nullable();
             $table->timestamps();
         });

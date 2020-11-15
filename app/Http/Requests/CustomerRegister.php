@@ -30,7 +30,7 @@ class CustomerRegister extends FormRequest
             'confirm_password' => 'required|min:6',
             'gender'=> 'required',
             'social_states'=> 'required',
-            'phone_number'=> 'required_without:email|regex:/(01)[0-9]{9}/|unique:users',
+            'phone_number'=> 'required_without:email|numeric|unique:users',
             'date_of_birth' => 'required|before:today',
         ];
     }

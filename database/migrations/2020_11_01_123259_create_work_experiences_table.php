@@ -20,8 +20,8 @@ class CreateWorkExperiencesTable extends Migration
             $table->string('position_ar');
             $table->string('location_en')->nullable();
             $table->string('location_ar')->nullable();
-            $table->string('start_date')->nullable();
-            $table->string('end_date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->boolean('currently')->default(0);
             $table->boolean('state')->default(0);
 

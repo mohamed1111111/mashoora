@@ -29,10 +29,9 @@ class VendorRegister extends FormRequest
             'password' => 'min:6|required_with:confirm_password|same:confirm_password',
             'confirm_password' => 'required|min:6',
             'gender'=> 'required',
-            'country'=> 'required',
             'category_id'=> 'required',
             'profile_image'=> 'required',
-            'phone_number'=> 'required|regex:/(01)[0-9]{9}/',
+            'phone_number'=> 'required|numeric|unique:users',
               ];
     }
 }

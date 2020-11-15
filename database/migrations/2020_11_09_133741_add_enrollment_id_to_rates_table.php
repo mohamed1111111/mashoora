@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCountryToVendors extends Migration
+class AddEnrollmentIdToRatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddCountryToVendors extends Migration
      */
     public function up()
     {
-        Schema::table('vendors', function (Blueprint $table) {
-            $table->string('country');
+        Schema::table('rates', function (Blueprint $table) {
+          $table->unsignedInteger('enrollment_id');
+
         });
     }
 
@@ -25,8 +26,8 @@ class AddCountryToVendors extends Migration
      */
     public function down()
     {
-        Schema::table('vendors', function (Blueprint $table) {
-            $table->dropColumn(['country']);
+        Schema::table('rates', function (Blueprint $table) {
+          $table->dropColumn(['enrollment_id']);
         });
     }
 }

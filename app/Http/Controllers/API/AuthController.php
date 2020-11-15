@@ -67,7 +67,7 @@ class AuthController extends BaseController
                $userVendorCreate->profile_image = $file_name;
                 $userVendorCreate->save();
                 $token=$user->createToken('MyApp')->accessToken;
-                 return $this->sendResponse(['token'=>$token],201);
+                return response()->json(['token'=>$token],201);
         }
 
     public function getGoogleUser(){
