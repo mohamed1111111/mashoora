@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Requests\LoginRequest;
-
+use App\Http\Resources\User as UserResource;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -61,13 +61,14 @@ class LoginController extends Controller
         }
         if(auth()->user()->type == 2){
           $user_id = auth()->user()->id;
-          $user = User::where('id',$user_id)->with('customer')->get();
+          $user = new UserResource(User::where('id',$user_id)->with('customer')->first());
         }
         if(auth()->user()->type == 3){
           $user_id = auth()->user()->id;
-          $user = User::where('id',$user_id)->with('vendor')->get();
+          $user = new UserResource(User::where('id',$user_id)->with('vendor')->first());
         }
-        return response()->json(['status'=>'success','token' => $token,'user'=>$user], 200);
+
+        return response()->json(['status'=>'success','token' => $token,'user'=>new UserResource($user)], 200);
       }
       return response()->json(['status'=>'Credentials does not match'], 404);
 

@@ -19,7 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('color');
             $table->string('name_ar');
             $table->string('name_en');
-            $table->unsignedInteger('parent_id');
+            $table->unsignedInteger('parent_id')->nullable();
             $table->boolean('state')->default(0);
             $table->timestamps();
         });

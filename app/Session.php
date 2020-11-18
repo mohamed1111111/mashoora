@@ -11,9 +11,10 @@ class Session extends Model
     'vendor_id','title','price','date','total_minutes','max_number_of_attendees','bookings_number','vendor_url',
     'attendees_url','recording_url','is_requested_from_customer'
    ];
-   protected $casts = [
-    'date' => 'datetime:Y-m-d',
-      ];
+   // protected $casts = [
+   //  //'date' => 'datetime:Y-m-d H:I:S'
+   //  'date' => datetime.format('Y-m-d H:M:S')
+   //    ];
    public function enrollments()
   {
       return $this->hasMany('App\Enrollment');

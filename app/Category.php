@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $fillable = [
-        'image','color','name_ar','name_en','parent_id','state'   
+        'image','color','name_ar','name_en','parent_id','state'
      ];
      public function parent()
     {

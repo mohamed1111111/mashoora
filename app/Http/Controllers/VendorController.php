@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Validator;
 use App\Http\Requests\DocumentUploude;
+use App\Http\Resources\Vendor as VendorResource;
+use App\Http\Resources\WorkExperiences as  WorkExperiencesResource;
 use App\Filters\VendorFilters;
 use Illuminate\Http\Request;
 use Http\Requests;
@@ -14,10 +16,12 @@ class VendorController extends Controller
 {
   public function index(VendorFilters $filters)
     {
-        $vendors=Vendor::with('user')->filter($filters)->get();
+        $vendors=VendorResource::collection(Vendor::with('user')->filter($filters)->get());
+        // $vendors=Vendor::with('user')->filter($filters)->get();
         return response()->json(['Vendors' =>$vendors],200);
 
     }
+
 
 
     // public function vendors(Request $request){
@@ -27,11 +31,13 @@ class VendorController extends Controller
 
 
     public function vendor($vendorId){
-      $vendor=Vendor::where('id', $vendorId)->with(['work_experiences', 'working_hours','rates'])->get();
+      $vendor = new VendorResource(Vendor::where('id',$vendorId)->with(['work_experiences','working_hours','rates'])->first());
+       // $vendor=Vendor::where('id', $vendorId)->with(['work_experiences', 'working_hours','rates'])->get();
       if(!$vendor){
         return response()->json(['Status' => 'Vendor not found'],404);
         }
-      return response()->json(['Vendor' =>$vendor],200);
+      return new VendorResource($vendor);
+      // return response()->json(['Vendor' =>$vendor],200);
     }
 
     public function storeDocument(DocumentUploude $request){

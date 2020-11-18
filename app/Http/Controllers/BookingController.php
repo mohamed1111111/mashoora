@@ -20,10 +20,7 @@ class BookingController extends Controller
       return response()->json(['status' => 'Success', 'data' => $sessions],200);
     }
 
- public function unavailableHours($start,$end,$vendor){
-   $unavailable = Session::where('vendor_id',$vendor)->whereBetween('date',[$start,$end]);
-   return response()->json(['unavailable hours'=>$unavailable],200);
- }
+
  public function vendorBookingList(){
       $user_id=Auth::user()->id;
       $vendor=DB::table('vendors')->where('user_id', $user_id)->first();
@@ -117,29 +114,28 @@ class BookingController extends Controller
       $user_id=Auth::user()->id;
       if($enroll->status!="pending"){
         if($enroll->status=="cancelled"){
-          return response()->json(['Status' => 'Sorry, already cancelled by client'],404);
+          return response()->json(['Status' => 'Sorry, already cancelled by client'],400);
         }
         if($enroll->status=="rejected"){
-          return response()->json(['Status' => 'Sorry, already rejected'],404);
+          return response()->json(['Status' => 'Sorry, already rejected'],400);
           }
-        return response()->json(['Status' => 'Sorry you can not do this'],404);
+        return response()->json(['Status' => 'Sorry, session in proccesing or completed'],400);
       }
-      $sessionID=$enroll->session_id;
-        $vendor=DB::table('vendors')->where('user_id', $user_id)->first();
-      // $vendor=Vendor::find()->where('user_id',$user_id);
+      $sessionId=$enroll->session_id;
+      //$vendor=DB::table('vendors')->where('user_id', $user_id)->first();
+      $vendor=Vendor::find()->where('user_id',$user_id)->first();
       if(!$vendor){
         return response()->json(['Status' => 'faild'],404);
 
       }
-      $session=Session::find($sessionID)->where('vendor_id',$vendor->id);
+      $session=Session::find($sessionId)->where('vendor_id',$vendor->id)->first();
       if(!$session){
         return response()->json(['Status' => 'faild'],404);
-
       }
       $enroll->status="rejected";
       $enroll->rejected_reason=$request->rejected_reason;
-        $enroll->save();
-        return response()->json(['Status' => 'Success'],200);
+      $enroll->save();
+      return response()->json(['Status' => 'Success'],200);
 
     }
 
@@ -157,12 +153,12 @@ class BookingController extends Controller
         }
       elseif($enroll->status!="pending"){
         if($enroll->status=="rejected"){
-          return response()->json(['status' => 'Sorry, already rejected by doctor'],404);
+          return response()->json(['status' => 'Sorry, already rejected by doctor'],400);
           }
           if($enroll->status=="cancelled"){
-            return response()->json(['status' => 'Sorry, already cancelled'],404);
+            return response()->json(['status' => 'Sorry, already cancelled'],400);
             }
-          return response()->json(['status' => 'Sorry you can not do this'],404);
+          return response()->json(['status' => 'Sorry, session in proccesing or completed'],400);
           }
       $enroll->status="cancelled";
       $enroll->save();
@@ -208,11 +204,14 @@ class BookingController extends Controller
             }
           elseif($enroll->status!="pending"){
             if($enroll->status=="rejected"){
-              return response()->json(['status' => 'Sorry, already rejected by doctor'],404);
+              return response()->json(['status' => 'Sorry, already rejected by doctor'],400);
               }
               if($enroll->status=="cancelled"){
-                return response()->json(['status' => 'Sorry, already cancelled'],404);
+                return response()->json(['status' => 'Sorry, already cancelled'],400);
                 }
+              if($enroll->status=="completed"){
+                  return response()->json(['status' => 'Sorry, already completed'],400);
+                  }
               return response()->json(['status' => 'Sorry you can not do this'],404);
               }
           $enroll->status="proccesing";

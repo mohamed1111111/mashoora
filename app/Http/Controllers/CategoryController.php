@@ -45,6 +45,7 @@ class CategoryController extends Controller
         $category->color=$request->get('color');
         $category->name_ar=$request->get('name_ar');
         $category->name_en=$request->get('name_en');
+        $category->parent_id=$request->get('parent_id');
         $category->state=$request->get('state');
         $category->image=$file_name;
         $category->save();

@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('login','API\LoginController@login');
-Route::get('unavailable/{start}/{end}/{vendor}', 'BookingController@unavailableHours');
 
 //auth  routes
 Route::post('customers/register','API\AuthController@customerRegister'); // customers/register
@@ -25,7 +24,7 @@ Route::get('email/resend','API\VerificationController@resend');
 Route::get('email/verify/{id}/{hash}','API\VerificationController@verify')->name('verification.verify');
 
 Route::get('vendors', 'VendorController@index');
-Route::get('vendor/{vendorId}', 'VendorController@vendor');
+Route::get('vendors/{vendorId}', 'VendorController@vendor');
 
 //sociallogin
 Route::get('login/google', 'API\AuthController@getGoogleUser');
@@ -58,6 +57,7 @@ Route::group(['middleware' => ['auth:api']], function() {
           Route::post('vendors/rating/{enrollment}', 'RateController@customerRate');
           //vendor working hours routes
           Route::post('vendors/working/hours', 'WorkingHoursController@store');
+          Route::get('vendors/working/hours/bookings', 'WorkingHoursController@workingHourBookings');
           Route::get('vendors/working/hours', 'WorkingHoursController@show');
           Route::PATCH('vendors/working/hours/{hours}', 'WorkingHoursController@update');
           Route::DELETE('vendors/working/hours/{hours}', 'WorkingHoursController@destroy');
