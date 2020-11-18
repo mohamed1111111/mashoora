@@ -68,7 +68,7 @@ class LoginController extends Controller
           $user = new UserResource(User::where('id',$user_id)->with('vendor')->first());
         }
 
-        return response()->json(['status'=>'success','token' => $token,'user'=>new UserResource($user)], 200);
+        return response()->json(['status'=>'done','token' => $token,'user'=>new UserResource($user)], 200);
       }
       return response()->json(['status'=>'Credentials does not match'], 404);
 
