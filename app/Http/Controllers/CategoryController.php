@@ -62,7 +62,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         return response()->json(['status' => 'Success', 'data' => $category]);
-    }
+    }  
 
     /**
      * Show the form for editing the specified resource.
